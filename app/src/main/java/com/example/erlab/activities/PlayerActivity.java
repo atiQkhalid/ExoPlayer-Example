@@ -78,7 +78,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     public static final String VIDEO_URL_EXTRA = "video_url_extra";
     public static final String TITLE_TEXT_EXTRA = "title_text_extra";
     public static final String PLAY_BUTTON_EXTRA = "play_button_extra";
-    public static final String HASH_LIST_EXTRA = "hash_list";
 
     public static final int TYPE_DASH = 0;
     public static final int TYPE_SS = 1;
