@@ -11,18 +11,16 @@ import com.google.android.exoplayer.util.Util;
 import java.io.IOException;
 import java.util.UUID;
 
-/**
- * A {@link MediaDrmCallback} for Widevine test content.
- */
+
 @TargetApi(18)
-public class WidevineTestMediaDrmCallback implements MediaDrmCallback {
+public class WideVineTestMediaDrmCallback implements MediaDrmCallback {
 
   private static final String WIDEVINE_GTS_DEFAULT_BASE_URI =
       "http://wv-staging-proxy.appspot.com/proxy?provider=YouTube&video_id=";
 
   private final String defaultUri;
 
-  public WidevineTestMediaDrmCallback(String videoId) {
+  public WideVineTestMediaDrmCallback(String videoId) {
     defaultUri = WIDEVINE_GTS_DEFAULT_BASE_URI + videoId;
   }
 

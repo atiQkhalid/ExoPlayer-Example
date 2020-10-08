@@ -35,13 +35,13 @@ import androidx.core.content.ContextCompat;
 
 import com.example.erlab.R;
 import com.example.erlab.player.DashRendererBuilder;
-import com.example.erlab.player.DemoPlayer;
+import com.example.erlab.player.ExoPlayerWrapper;
 import com.example.erlab.player.ExtractorRendererBuilder;
 import com.example.erlab.player.HlsRendererBuilder;
 import com.example.erlab.player.MediaController;
 import com.example.erlab.player.SmoothStreamingRendererBuilder;
 import com.example.erlab.player.SmoothStreamingTestMediaDrmCallback;
-import com.example.erlab.player.WidevineTestMediaDrmCallback;
+import com.example.erlab.player.WideVineTestMediaDrmCallback;
 import com.google.android.exoplayer.AspectRatioFrameLayout;
 import com.google.android.exoplayer.ExoPlayer;
 import com.google.android.exoplayer.MediaFormat;
@@ -71,7 +71,7 @@ import java.util.Locale;
  */
 
 public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
-        DemoPlayer.Listener, DemoPlayer.CaptionListener, DemoPlayer.Id3MetadataListener,
+        ExoPlayerWrapper.Listener, ExoPlayerWrapper.CaptionListener, ExoPlayerWrapper.Id3MetadataListener,
         AudioCapabilitiesReceiver.Listener {
 
     public static final String CONTENT_TYPE_EXTRA = "content_type";
@@ -105,7 +105,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     private SurfaceView surfaceView;
     private SubtitleLayout subtitleLayout;
 
-    private DemoPlayer player;
+    private ExoPlayerWrapper player;
     private boolean playerNeedsPrepare;
 
 
@@ -236,7 +236,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         player.setBackgrounded(backgrounded);
     }
 
-    private DemoPlayer.RendererBuilder getRendererBuilder() {
+    private ExoPlayerWrapper.RendererBuilder getRendererBuilder() {
         String userAgent = Util.getUserAgent(this, "ExoPlayerDemo");
         switch (contentType) {
             case TYPE_SS:
@@ -244,7 +244,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
                         new SmoothStreamingTestMediaDrmCallback());
             case TYPE_DASH:
                 return new DashRendererBuilder(this, userAgent, contentUri.toString(),
-                        new WidevineTestMediaDrmCallback(contentId));
+                        new WideVineTestMediaDrmCallback(contentId));
             case TYPE_HLS:
                 return new HlsRendererBuilder(this, userAgent, contentUri.toString());
             case TYPE_OTHER:
@@ -257,7 +257,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     private void preparePlayer(boolean playWhenReady) {
 
         if (player == null) {
-            player = new DemoPlayer();
+            player = new ExoPlayerWrapper();
             player.setRendererBuilder(getRendererBuilder());
             player.addListener(this);
             player.setCaptionListener(this);
@@ -369,7 +369,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         });
         Menu menu = popup.getMenu();
         // ID_OFFSET ensures we avoid clashing with Menu.NONE (which equals 0)
-        menu.add(MENU_GROUP_TRACKS, DemoPlayer.TRACK_DISABLED + ID_OFFSET, Menu.NONE, R.string.off);
+        menu.add(MENU_GROUP_TRACKS, ExoPlayerWrapper.TRACK_DISABLED + ID_OFFSET, Menu.NONE, R.string.off);
         for (int i = 0; i < trackCount; i++) {
             menu.add(MENU_GROUP_TRACKS, i + ID_OFFSET, Menu.NONE,
                     buildTrackName(player.getTrackFormat(trackType, i)));

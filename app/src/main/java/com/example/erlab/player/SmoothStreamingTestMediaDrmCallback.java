@@ -6,7 +6,6 @@ import android.media.MediaDrm.ProvisionRequest;
 import android.text.TextUtils;
 
 import com.google.android.exoplayer.drm.MediaDrmCallback;
-import com.google.android.exoplayer.drm.StreamingDrmSessionManager;
 import com.google.android.exoplayer.util.Util;
 
 import java.io.IOException;
@@ -14,9 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-/**
- * Demo {@link StreamingDrmSessionManager} for smooth streaming test content.
- */
 @TargetApi(18)
 public class SmoothStreamingTestMediaDrmCallback implements MediaDrmCallback {
 

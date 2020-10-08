@@ -36,12 +36,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/**
- * A wrapper around {@link ExoPlayer} that provides a higher level interface. It can be prepared
- * with one of a number of {@link RendererBuilder} classes to suit different use cases (e.g. DASH,
- * SmoothStreaming and so on).
- */
-public class DemoPlayer implements ExoPlayer.Listener, ChunkSampleSource.EventListener,
+
+public class ExoPlayerWrapper implements ExoPlayer.Listener, ChunkSampleSource.EventListener,
         HlsSampleSource.EventListener, DefaultBandwidthMeter.EventListener,
         MediaCodecVideoTrackRenderer.EventListener, MediaCodecAudioTrackRenderer.EventListener,
         StreamingDrmSessionManager.EventListener, DashChunkSource.EventListener, TextRenderer,
@@ -55,17 +51,17 @@ public class DemoPlayer implements ExoPlayer.Listener, ChunkSampleSource.EventLi
         /**
          * Builds renderers for playback.
          *
-         * @param player The player for which renderers are being built. {@link DemoPlayer#onRenderers}
+         * @param player The player for which renderers are being built. {@link ExoPlayerWrapper#onRenderers}
          *               should be invoked once the renderers have been built. If building fails,
-         *               {@link DemoPlayer#onRenderersError} should be invoked.
+         *               {@link ExoPlayerWrapper#onRenderersError} should be invoked.
          */
-        void buildRenderers(DemoPlayer player);
+        void buildRenderers(ExoPlayerWrapper player);
 
         /**
          * Cancels the current build operation, if there is one. Else does nothing.
          * <p/>
-         * A canceled build operation must not invoke {@link DemoPlayer#onRenderers} or
-         * {@link DemoPlayer#onRenderersError} on the player, which may have been released.
+         * A canceled build operation must not invoke {@link ExoPlayerWrapper#onRenderers} or
+         * {@link ExoPlayerWrapper#onRenderersError} on the player, which may have been released.
          */
         void cancel();
     }
@@ -205,7 +201,7 @@ public class DemoPlayer implements ExoPlayer.Listener, ChunkSampleSource.EventLi
      * Only for backward compatibility (I think super user app uses it)
      */
     @Deprecated
-    public DemoPlayer(RendererBuilder rendererBuilder) {
+    public ExoPlayerWrapper(RendererBuilder rendererBuilder) {
         player = ExoPlayer.Factory.newInstance(RENDERER_COUNT, 1000, 5000);
         this.rendererBuilder = rendererBuilder;
         player.addListener(this);
@@ -219,7 +215,7 @@ public class DemoPlayer implements ExoPlayer.Listener, ChunkSampleSource.EventLi
     }
 
 
-    public DemoPlayer() {
+    public ExoPlayerWrapper() {
         player = ExoPlayer.Factory.newInstance(RENDERER_COUNT, 1000, 5000);
         player.addListener(this);
         playerControl = new PlayerControl(player);
@@ -337,7 +333,7 @@ public class DemoPlayer implements ExoPlayer.Listener, ChunkSampleSource.EventLi
     /**
      * Invoked with the results from a {@link RendererBuilder}.
      *
-     * @param renderers      Renderers indexed by {@link DemoPlayer} TYPE_* constants. An individual
+     * @param renderers      Renderers indexed by {@link ExoPlayerWrapper} TYPE_* constants. An individual
      *                       element may be null if there do not exist tracks of the corresponding type.
      * @param bandwidthMeter Provides an estimate of the currently available bandwidth. May be null.
      */
