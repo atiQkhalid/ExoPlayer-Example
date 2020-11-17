@@ -1,5 +1,5 @@
 # Erlab
-Exo player example for Erlab
+Exo player example using MVP clean architecture.
 
 ##Android Architecture
 
@@ -12,4 +12,4 @@ Used Google EXO player
 HLS, DASH, SS, MP4, MP3 etc
 
 ##Developer
-Malik Dawar| Senior Software Engineer
+Malik Dawar | Senior Software Engineer
